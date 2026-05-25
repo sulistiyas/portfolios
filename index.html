@@ -1,613 +1,1218 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sulis — Laravel Developer & Web Application Engineer. Building scalable web systems and SaaS platforms." />
-  <title>Sulis — Laravel Developer</title>
+  <title>Sulistiya Nugroho — Laravel Developer & SaaS Engineer</title>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter']
+          },
+          colors: {
+            primary: '#3B82F6',
+            soft: '#60A5FA',
+            cyan: '#22D3EE',
+            navy: '#0F172A',
+            surface: '#111827',
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(59,130,246,0.35)',
+            soft: '0 10px 40px rgba(15,23,42,0.5)',
+            card: '0 10px 60px rgba(2,6,23,0.6)',
+          },
+          backgroundImage: {
+            hero:
+              'radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 35%), radial-gradient(circle at bottom right, rgba(34,211,238,0.15), transparent 30%)'
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            blob: 'blob 12s infinite',
+            glow: 'glow 4s ease-in-out infinite',
+            pulseSlow: 'pulseSlow 4s infinite',
+            reveal: 'reveal 1s ease forwards',
+            marquee: 'marquee 25s linear infinite'
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' }
+            },
+            blob: {
+              '0%,100%': {
+                transform: 'translate(0px,0px) scale(1)'
+              },
+              '33%': {
+                transform: 'translate(30px,-50px) scale(1.1)'
+              },
+              '66%': {
+                transform: 'translate(-20px,20px) scale(0.95)'
+              }
+            },
+            glow: {
+              '0%,100%': {
+                opacity: 0.5
+              },
+              '50%': {
+                opacity: 1
+              }
+            },
+            pulseSlow: {
+              '0%,100%': {
+                transform: 'scale(1)'
+              },
+              '50%': {
+                transform: 'scale(1.05)'
+              }
+            },
+            reveal: {
+              from: {
+                opacity: 0,
+                transform: 'translateY(40px)'
+              },
+              to: {
+                opacity: 1,
+                transform: 'translateY(0)'
+              }
+            },
+            marquee: {
+              from: { transform: 'translateX(0)' },
+              to: { transform: 'translateX(-50%)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: #020617;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(96, 165, 250, 0.15);
+    }
+
+    .glass-strong {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(96, 165, 250, 0.25);
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #ffffff, #60A5FA, #22D3EE);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .border-glow {
+      border: 1px solid rgba(96,165,250,0.2);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.03),
+        0 0 0 1px rgba(59,130,246,0.05),
+        0 0 40px rgba(59,130,246,0.08);
+    }
+
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.03);
+    }
+
+    .grid-overlay {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .noise {
+      position: absolute;
+      inset: 0;
+      opacity: .04;
+      background-image:
+      radial-gradient(circle at 20% 20%, white 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cursor-glow {
+      width: 500px;
+      height: 500px;
+      position: fixed;
+      background: radial-gradient(circle, rgba(59,130,246,0.12), transparent 60%);
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
-<body>
 
-  <!-- ═══════════════════════════════════════════════
-       NAVIGATION
-  ═══════════════════════════════════════════════ -->
-  <header class="navbar" id="navbar">
-    <div class="container navbar__inner">
-      <a href="#hero" class="navbar__logo">
-        <span class="logo-bracket">&lt;</span>Sulis<span class="logo-bracket">/&gt;</span>
-      </a>
+<body class="font-sans text-white relative">
 
-      <nav class="navbar__links" id="navLinks">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#contact" class="nav-link">Contact</a>
+  <!-- Cursor Glow -->
+  <div class="cursor-glow hidden lg:block"></div>
+
+  <!-- Scroll Progress -->
+  <div id="progress"
+       class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-primary to-cyan z-[9999] w-0">
+  </div>
+
+  <!-- Background -->
+  <div class="fixed inset-0 bg-hero"></div>
+  <div class="fixed inset-0 grid-overlay opacity-20"></div>
+
+  <!-- Blobs -->
+  <div class="fixed top-[-200px] left-[-120px] w-[500px] h-[500px] rounded-full bg-blue-500/20 blur-3xl animate-blob"></div>
+  <div class="fixed bottom-[-200px] right-[-120px] w-[500px] h-[500px] rounded-full bg-cyan-500/20 blur-3xl animate-blob"></div>
+  <div class="noise"></div>
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <nav class="mt-5 glass rounded-2xl border-glow px-6 lg:px-8 h-20 flex items-center justify-between">
+
+        <a href="#" class="font-black tracking-tight text-2xl">
+          Sulistiya<span class="text-soft">.</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10 text-sm text-slate-300">
+          <a href="#projects" class="hover:text-white transition">Projects</a>
+          <a href="#about" class="hover:text-white transition">About</a>
+          <a href="#skills" class="hover:text-white transition">Skills</a>
+          <a href="#contact" class="hover:text-white transition">Contact</a>
+        </div>
+
+        <a href="#contact"
+           class="hidden md:flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-primary to-cyan font-medium shadow-glow hover:scale-105 transition">
+          Hire Me
+        </a>
+
       </nav>
-
-      <div class="navbar__actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-          <span class="theme-icon theme-icon--sun">☀</span>
-          <span class="theme-icon theme-icon--moon">☽</span>
-        </button>
-        <a href="#contact" class="btn btn--sm btn--primary">Hire Me</a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
     </div>
   </header>
 
-  <main>
+  <!-- HERO -->
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-32">
 
-    <!-- ═══════════════════════════════════════════════
-         HERO SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="hero" id="hero">
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
 
-      <!-- Ambient background blobs -->
-      <div class="hero__bg" aria-hidden="true">
-        <div class="blob blob--1"></div>
-        <div class="blob blob--2"></div>
-        <div class="blob blob--3"></div>
-        <div class="grid-overlay"></div>
-      </div>
+      <div class="grid lg:grid-cols-2 gap-20 items-center">
 
-      <div class="container hero__content">
-        <div class="hero__badge reveal-up">
-          <span class="badge-dot"></span>
-          Available for new projects
+        <!-- LEFT -->
+        <div class="reveal">
+
+          <div class="inline-flex items-center gap-3 px-5 py-3 rounded-full glass border-glow mb-8">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan animate-pulse"></span>
+            <span class="text-sm text-slate-200">
+              Available for Freelance & Remote Work
+            </span>
+          </div>
+
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8">
+            <span class="gradient-text">
+              Laravel Developer
+            </span>
+            <br>
+            & SaaS Engineer
+          </h1>
+
+          <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mb-10">
+            I build scalable web applications, modern SaaS platforms,
+            REST APIs, and elegant dashboard systems with Laravel ecosystem technologies.
+          </p>
+
+          <!-- CTA -->
+          <div class="flex flex-wrap gap-4 mb-12">
+
+            <a href="#projects"
+               class="px-7 py-4 rounded-2xl bg-gradient-to-r from-primary to-cyan text-white font-semibold shadow-glow hover:scale-105 transition-all duration-300">
+              View Projects
+            </a>
+
+            <a href="#contact"
+               class="px-7 py-4 rounded-2xl glass border-glow text-white hover:bg-white/5 transition-all duration-300">
+              Contact Me
+            </a>
+
+          </div>
+
+          <!-- Pills -->
+          <div class="flex flex-wrap gap-4">
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              Laravel
+            </div>
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              PHP
+            </div>
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              MySQL
+            </div>
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              TailwindCSS
+            </div>
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              Alpine.js
+            </div>
+
+            <div class="glass border-glow px-5 py-3 rounded-2xl text-sm text-slate-200">
+              REST API
+            </div>
+
+          </div>
+
         </div>
 
-        <h1 class="hero__title reveal-up" style="--delay: 0.1s">
-          Crafting Digital<br />
-          <span class="gradient-text">Experiences</span><br />
-          That Scale.
-        </h1>
+        <!-- RIGHT -->
+        <div class="relative hidden lg:block reveal">
 
-        <p class="hero__subtitle reveal-up" style="--delay: 0.2s">
-          Laravel Developer &amp; Web Application Engineer<br />
-          Building robust SaaS platforms and enterprise-grade systems.
+          <!-- floating cards -->
+          <div class="absolute -top-10 -left-8 glass border-glow rounded-3xl p-5 w-48 animate-float shadow-card">
+            <div class="text-xs text-slate-400 mb-3">Analytics</div>
+
+            <div class="text-3xl font-bold mb-2">+72%</div>
+
+            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div class="h-full w-3/4 bg-gradient-to-r from-primary to-cyan"></div>
+            </div>
+          </div>
+
+          <div class="absolute -bottom-8 right-0 glass border-glow rounded-3xl p-5 w-56 animate-float shadow-card"
+               style="animation-delay: 2s">
+
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-sm text-slate-300">API Requests</div>
+              <div class="text-cyan text-xs">Live</div>
+            </div>
+
+            <div class="text-4xl font-black mb-4">1.2M</div>
+
+            <div class="flex gap-2">
+              <div class="h-16 w-3 rounded-full bg-primary/30"></div>
+              <div class="h-10 w-3 rounded-full bg-primary/50"></div>
+              <div class="h-20 w-3 rounded-full bg-primary"></div>
+              <div class="h-14 w-3 rounded-full bg-cyan"></div>
+              <div class="h-24 w-3 rounded-full bg-soft"></div>
+            </div>
+
+          </div>
+
+          <!-- Main Dashboard -->
+          <div class="glass-strong border-glow rounded-[36px] p-6 shadow-card relative overflow-hidden">
+
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-cyan/10"></div>
+
+            <!-- top -->
+            <div class="relative flex">
+
+              <!-- sidebar -->
+              <div class="w-24 rounded-3xl bg-slate-900/70 border border-white/5 p-4 flex flex-col gap-4">
+
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-cyan"></div>
+
+                <div class="space-y-3 mt-4">
+                  <div class="h-3 rounded-full bg-slate-700"></div>
+                  <div class="h-3 rounded-full bg-slate-700 w-4/5"></div>
+                  <div class="h-3 rounded-full bg-primary"></div>
+                  <div class="h-3 rounded-full bg-slate-700"></div>
+                </div>
+
+              </div>
+
+              <!-- content -->
+              <div class="flex-1 pl-6">
+
+                <div class="grid grid-cols-3 gap-4 mb-5">
+
+                  <div class="rounded-2xl p-4 bg-slate-900/70 border border-white/5">
+                    <div class="text-xs text-slate-400 mb-2">Revenue</div>
+                    <div class="text-2xl font-bold">$48K</div>
+                  </div>
+
+                  <div class="rounded-2xl p-4 bg-slate-900/70 border border-white/5">
+                    <div class="text-xs text-slate-400 mb-2">Users</div>
+                    <div class="text-2xl font-bold">8.2K</div>
+                  </div>
+
+                  <div class="rounded-2xl p-4 bg-slate-900/70 border border-white/5">
+                    <div class="text-xs text-slate-400 mb-2">Growth</div>
+                    <div class="text-2xl font-bold text-cyan">+32%</div>
+                  </div>
+
+                </div>
+
+                <!-- chart -->
+                <div class="rounded-3xl bg-slate-900/70 border border-white/5 p-6">
+
+                  <div class="flex justify-between items-center mb-8">
+                    <div>
+                      <div class="text-lg font-semibold">Dashboard Analytics</div>
+                      <div class="text-sm text-slate-400">
+                        SaaS performance overview
+                      </div>
+                    </div>
+
+                    <div class="px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm">
+                      Active
+                    </div>
+                  </div>
+
+                  <div class="flex items-end gap-3 h-48">
+
+                    <div class="flex-1 h-20 rounded-t-2xl bg-gradient-to-t from-primary to-soft"></div>
+                    <div class="flex-1 h-28 rounded-t-2xl bg-gradient-to-t from-primary to-soft"></div>
+                    <div class="flex-1 h-40 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                    <div class="flex-1 h-24 rounded-t-2xl bg-gradient-to-t from-soft to-cyan"></div>
+                    <div class="flex-1 h-36 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                    <div class="flex-1 h-48 rounded-t-2xl bg-gradient-to-t from-cyan to-soft"></div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- STATS -->
+  <section class="py-24 relative">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="glass border-glow rounded-3xl p-8 text-center reveal">
+          <div class="text-5xl font-black gradient-text mb-4">10+</div>
+          <div class="text-slate-400">Projects Built</div>
+        </div>
+
+        <div class="glass border-glow rounded-3xl p-8 text-center reveal">
+          <div class="text-5xl font-black gradient-text mb-4">20+</div>
+          <div class="text-slate-400">APIs Developed</div>
+        </div>
+
+        <div class="glass border-glow rounded-3xl p-8 text-center reveal">
+          <div class="text-5xl font-black gradient-text mb-4">15+</div>
+          <div class="text-slate-400">Technologies Used</div>
+        </div>
+
+        <div class="glass border-glow rounded-3xl p-8 text-center reveal">
+          <div class="text-5xl font-black gradient-text mb-4">2</div>
+          <div class="text-slate-400">SaaS Systems</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="py-32 relative">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="mb-20 reveal">
+
+        <div class="inline-flex px-4 py-2 rounded-full glass border-glow text-soft text-sm mb-6">
+          Featured Work
+        </div>
+
+        <h2 class="text-5xl lg:text-6xl font-black mb-6 leading-tight">
+          Premium SaaS
+          <span class="gradient-text">Projects</span>
+        </h2>
+
+        <p class="text-slate-400 text-lg max-w-3xl leading-relaxed">
+          Real-world systems focused on scalable architecture,
+          SaaS engineering, REST APIs, and elegant admin dashboards.
         </p>
 
-        <div class="hero__cta reveal-up" style="--delay: 0.3s">
-          <a href="#projects" class="btn btn--primary btn--lg">
-            View Projects
-            <span class="btn-arrow">→</span>
-          </a>
-          <a href="#contact" class="btn btn--ghost btn--lg">
-            Contact Me
-          </a>
-        </div>
-
-        <div class="hero__stats reveal-up" style="--delay: 0.4s">
-          <div class="hero-stat">
-            <span class="hero-stat__num">2+</span>
-            <span class="hero-stat__label">Years Coding</span>
-          </div>
-          <div class="hero-stat__divider"></div>
-          <div class="hero-stat">
-            <span class="hero-stat__num">10+</span>
-            <span class="hero-stat__label">Projects Built</span>
-          </div>
-          <div class="hero-stat__divider"></div>
-          <div class="hero-stat">
-            <span class="hero-stat__num">9+</span>
-            <span class="hero-stat__label">Technologies</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Floating tech pills -->
-      <div class="hero__floaters" aria-hidden="true">
-        <div class="floater floater--1">Laravel</div>
-        <div class="floater floater--2">MySQL</div>
-        <div class="floater floater--3">Alpine.js</div>
-        <div class="floater floater--4">REST API</div>
-      </div>
+      <div class="space-y-12">
 
-      <div class="scroll-indicator" aria-hidden="true">
-        <div class="scroll-indicator__dot"></div>
-      </div>
-    </section>
+        <!-- Project 1 -->
+        <div class="project-card group relative reveal">
 
-    <!-- ═══════════════════════════════════════════════
-         ABOUT SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="about section" id="about">
-      <div class="container">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-cyan/20 blur-3xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
 
-        <div class="section-header reveal-up">
-          <span class="section-tag">About</span>
-          <h2 class="section-title">The Developer <br /><span class="gradient-text">Behind the Code</span></h2>
-        </div>
+          <div class="relative glass-strong border-glow rounded-[40px] overflow-hidden">
 
-        <div class="about__grid">
-          <!-- Bio card -->
-          <div class="about__bio glass-card reveal-left">
-            <div class="about-avatar">
-              <div class="avatar-ring"></div>
-              <div class="avatar-initials">SY</div>
-            </div>
-            <div class="about-text">
-              <h3>Hello, I'm Sulis</h3>
-              <p>
-                I'm a dedicated Laravel developer passionate about building clean, 
-                scalable web applications. I specialise in crafting SaaS platforms, 
-                admin systems, and REST APIs that power real businesses.
-              </p>
-              <p>
-                My workflow blends elegant backend architecture with modern frontend 
-                tooling — delivering systems that are fast, maintainable, and built to last.
-              </p>
-              <a href="#contact" class="btn btn--primary btn--sm" style="margin-top: 1.5rem; display:inline-flex;">Let's Talk</a>
-            </div>
-          </div>
+            <div class="grid lg:grid-cols-2 gap-0">
 
-          <!-- Skills grid -->
-          <div class="about__skills reveal-right">
-            <h3 class="about__skills-title">Core Skills</h3>
-            <div class="skill-pills">
-              <div class="skill-pill">
-                <span class="skill-pill__icon">⚡</span>
-                <div>
-                  <strong>Laravel</strong>
-                  <span>PHP Framework</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🔗</span>
-                <div>
-                  <strong>REST API</strong>
-                  <span>API Development</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🗄️</span>
-                <div>
-                  <strong>MySQL</strong>
-                  <span>Relational Database</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🎨</span>
-                <div>
-                  <strong>TailwindCSS</strong>
-                  <span>Utility CSS</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🏔️</span>
-                <div>
-                  <strong>Alpine.js</strong>
-                  <span>Lightweight JS</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🌊</span>
-                <div>
-                  <strong>Livewire</strong>
-                  <span>Full-Stack Laravel</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">💛</span>
-                <div>
-                  <strong>JavaScript</strong>
-                  <span>Vanilla & ES6+</span>
-                </div>
-              </div>
-              <div class="skill-pill">
-                <span class="skill-pill__icon">🐘</span>
-                <div>
-                  <strong>PHP</strong>
-                  <span>Server Language</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              <!-- Preview -->
+              <div class="relative overflow-hidden min-h-[500px] bg-gradient-to-br from-slate-950 to-slate-900">
 
-      </div>
-    </section>
+                <div class="project-image absolute inset-0 transition duration-700 p-10">
 
-    <!-- ═══════════════════════════════════════════════
-         FEATURED PROJECTS
-    ═══════════════════════════════════════════════ -->
-    <section class="projects section" id="projects">
-      <div class="container">
+                  <!-- mock dashboard -->
+                  <div class="h-full rounded-[32px] bg-slate-950 border border-white/10 p-6 shadow-card">
 
-        <div class="section-header reveal-up">
-          <span class="section-tag">Work</span>
-          <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
-          <p class="section-desc">Production-ready systems built with precision and scale in mind.</p>
-        </div>
+                    <div class="flex gap-4 h-full">
 
-        <div class="projects__grid">
+                      <div class="w-24 rounded-3xl bg-slate-900 border border-white/5 p-4">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-cyan mb-6"></div>
 
-          <!-- PROJECT 1 -->
-          <article class="project-card reveal-up" style="--delay: 0s">
-            <div class="project-card__glow"></div>
-
-            <div class="project-card__preview">
-              <div class="preview-mockup">
-                <div class="mockup-bar">
-                  <span></span><span></span><span></span>
-                </div>
-                <div class="mockup-content">
-                  <div class="mockup-sidebar">
-                    <div class="mockup-nav-item active"></div>
-                    <div class="mockup-nav-item"></div>
-                    <div class="mockup-nav-item"></div>
-                    <div class="mockup-nav-item"></div>
-                  </div>
-                  <div class="mockup-main">
-                    <div class="mockup-stat-row">
-                      <div class="mockup-stat"></div>
-                      <div class="mockup-stat"></div>
-                      <div class="mockup-stat"></div>
-                    </div>
-                    <div class="mockup-chart">
-                      <div class="chart-bar" style="height:60%"></div>
-                      <div class="chart-bar" style="height:80%"></div>
-                      <div class="chart-bar" style="height:45%"></div>
-                      <div class="chart-bar" style="height:90%"></div>
-                      <div class="chart-bar" style="height:65%"></div>
-                      <div class="chart-bar" style="height:75%"></div>
-                    </div>
-                    <div class="mockup-table">
-                      <div class="mockup-row"></div>
-                      <div class="mockup-row"></div>
-                      <div class="mockup-row"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="project-number">01</div>
-            </div>
-
-            <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-type">Inventory System</span>
-                <span class="project-status project-status--live">Open Source</span>
-              </div>
-
-              <h3 class="project-card__title">Inventory Management System</h3>
-
-              <p class="project-card__desc">
-                A modern inventory and stock management platform for efficient warehouse operations 
-                and business inventory tracking. Built for scalability and ease of use.
-              </p>
-
-              <ul class="project-features">
-                <li>Product &amp; stock management</li>
-                <li>Supplier management</li>
-                <li>Reports &amp; analytics</li>
-                <li>Dashboard visualization</li>
-                <li>Responsive admin panel</li>
-              </ul>
-
-              <div class="project-card__stack">
-                <span class="tech-badge tech-badge--laravel">Laravel</span>
-                <span class="tech-badge tech-badge--mysql">MySQL</span>
-                <span class="tech-badge tech-badge--tailwind">TailwindCSS</span>
-                <span class="tech-badge tech-badge--js">JavaScript</span>
-              </div>
-
-              <div class="project-card__actions">
-                <a href="https://github.com/sulistiyas/Inventory-Management" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">
-                  <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                  GitHub
-                </a>
-                <a href="#" class="btn btn--primary btn--sm">
-                  Live Demo
-                  <span class="btn-arrow">→</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 2 -->
-          <article class="project-card project-card--featured reveal-up" style="--delay: 0.15s">
-            <div class="project-card__glow"></div>
-            <div class="project-card__badge">Featured</div>
-
-            <div class="project-card__preview">
-              <div class="preview-mockup preview-mockup--dark">
-                <div class="mockup-bar">
-                  <span></span><span></span><span></span>
-                </div>
-                <div class="mockup-content">
-                  <div class="mockup-sidebar">
-                    <div class="mockup-logo-area"></div>
-                    <div class="mockup-nav-item active"></div>
-                    <div class="mockup-nav-item"></div>
-                    <div class="mockup-nav-item"></div>
-                    <div class="mockup-nav-item"></div>
-                    <div class="mockup-nav-item"></div>
-                  </div>
-                  <div class="mockup-main">
-                    <div class="mockup-stat-row">
-                      <div class="mockup-stat mockup-stat--blue"></div>
-                      <div class="mockup-stat mockup-stat--purple"></div>
-                      <div class="mockup-stat mockup-stat--green"></div>
-                    </div>
-                    <div class="mockup-two-col">
-                      <div class="mockup-card-sm">
-                        <div class="mockup-line"></div>
-                        <div class="mockup-line short"></div>
-                        <div class="mockup-avatar-row">
-                          <div class="mockup-avatar"></div>
-                          <div class="mockup-avatar"></div>
-                          <div class="mockup-avatar"></div>
+                        <div class="space-y-3">
+                          <div class="h-3 bg-slate-700 rounded-full"></div>
+                          <div class="h-3 bg-primary rounded-full"></div>
+                          <div class="h-3 bg-slate-700 rounded-full"></div>
+                          <div class="h-3 bg-slate-700 rounded-full"></div>
                         </div>
                       </div>
-                      <div class="mockup-card-sm">
-                        <div class="mockup-pie"></div>
+
+                      <div class="flex-1">
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+
+                          <div class="rounded-2xl p-4 bg-slate-900 border border-white/5">
+                            <div class="text-xs text-slate-400">Products</div>
+                            <div class="text-2xl font-bold mt-2">1.2K</div>
+                          </div>
+
+                          <div class="rounded-2xl p-4 bg-slate-900 border border-white/5">
+                            <div class="text-xs text-slate-400">Suppliers</div>
+                            <div class="text-2xl font-bold mt-2">284</div>
+                          </div>
+
+                          <div class="rounded-2xl p-4 bg-slate-900 border border-white/5">
+                            <div class="text-xs text-slate-400">Growth</div>
+                            <div class="text-2xl font-bold mt-2 text-cyan">+18%</div>
+                          </div>
+
+                        </div>
+
+                        <div class="rounded-3xl p-6 bg-slate-900 border border-white/5">
+
+                          <div class="flex items-end gap-3 h-52">
+
+                            <div class="flex-1 h-16 rounded-t-2xl bg-gradient-to-t from-primary to-soft"></div>
+                            <div class="flex-1 h-28 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                            <div class="flex-1 h-40 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                            <div class="flex-1 h-20 rounded-t-2xl bg-gradient-to-t from-soft to-cyan"></div>
+                            <div class="flex-1 h-52 rounded-t-2xl bg-gradient-to-t from-cyan to-soft"></div>
+
+                          </div>
+
+                        </div>
+
                       </div>
+
                     </div>
+
                   </div>
+
                 </div>
+
               </div>
-              <div class="project-number">02</div>
+
+              <!-- Content -->
+              <div class="p-10 lg:p-14 flex flex-col justify-center">
+
+                <div class="inline-flex px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-8 w-fit">
+                  Inventory Platform
+                </div>
+
+                <h3 class="text-4xl font-black mb-6">
+                  Inventory Management System
+                </h3>
+
+                <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                  Modern inventory and stock management platform with dashboard analytics,
+                  supplier management, stock tracking, reporting system,
+                  and responsive admin dashboard.
+                </p>
+
+                <!-- Features -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-10">
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Product Management
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Stock Tracking
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Reports & Analytics
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Supplier Management
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow sm:col-span-2">
+                    Dashboard Visualization
+                  </div>
+
+                </div>
+
+                <!-- tech -->
+                <div class="flex flex-wrap gap-3 mb-10">
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    Laravel
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    MySQL
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    TailwindCSS
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    JavaScript
+                  </div>
+
+                </div>
+
+                <!-- buttons -->
+                <div class="flex flex-wrap gap-4">
+
+                  <a href="https://github.com/sulistiyas/Inventory-Management"
+                     target="_blank"
+                     class="px-6 py-4 rounded-2xl bg-gradient-to-r from-primary to-cyan font-semibold hover:scale-105 transition shadow-glow">
+                    GitHub Repository
+                  </a>
+
+                  <a href="#"
+                     class="px-6 py-4 rounded-2xl glass border-glow hover:bg-white/5 transition">
+                    Live Demo Soon
+                  </a>
+
+                </div>
+
+              </div>
+
             </div>
 
-            <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-type">SaaS Platform</span>
-                <span class="project-status project-status--beta">In Development</span>
+          </div>
+
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card group relative reveal">
+
+          <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-cyan/20 blur-3xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
+
+          <div class="relative glass-strong border-glow rounded-[40px] overflow-hidden">
+
+            <div class="grid lg:grid-cols-2 gap-0">
+
+              <!-- Content -->
+              <div class="p-10 lg:p-14 flex flex-col justify-center order-2 lg:order-1">
+
+                <div class="inline-flex px-4 py-2 rounded-full bg-cyan/10 border border-cyan/20 text-cyan text-sm mb-8 w-fit">
+                  SaaS Multi School System
+                </div>
+
+                <h3 class="text-4xl font-black mb-6">
+                  EduVora
+                </h3>
+
+                <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                  Scalable SaaS multi-school management platform with role-based systems
+                  for super-admin, school-admin, teacher, student,
+                  and parent management.
+                </p>
+
+                <!-- Features -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-10">
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Multi-school Architecture
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Student Management
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Teacher Management
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Attendance System
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Academic Year & Semester
+                  </div>
+
+                  <div class="glass rounded-2xl p-4 border-glow">
+                    Role-based Authentication
+                  </div>
+
+                </div>
+
+                <!-- tech -->
+                <div class="flex flex-wrap gap-3 mb-10">
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    Laravel
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    MySQL
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    TailwindCSS
+                  </div>
+
+                  <div class="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 text-slate-300">
+                    Alpine.js
+                  </div>
+
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+
+                  <a href="https://github.com/sulistiyas/EduVora"
+                     target="_blank"
+                     class="px-6 py-4 rounded-2xl bg-gradient-to-r from-primary to-cyan font-semibold hover:scale-105 transition shadow-glow">
+                    GitHub Repository
+                  </a>
+
+                  <a href="#"
+                     class="px-6 py-4 rounded-2xl glass border-glow hover:bg-white/5 transition">
+                    Live Demo Soon
+                  </a>
+
+                </div>
+
               </div>
 
-              <h3 class="project-card__title">EduVora — SaaS Multi School Management System</h3>
+              <!-- Preview -->
+              <div class="relative overflow-hidden min-h-[500px] bg-gradient-to-br from-slate-950 to-slate-900 order-1 lg:order-2">
 
-              <p class="project-card__desc">
-                A scalable SaaS-based school management platform built for managing multiple 
-                schools with role-based access, academic systems, and comprehensive dashboards.
-              </p>
+                <div class="project-image absolute inset-0 transition duration-700 p-10">
 
-              <ul class="project-features">
-                <li>Multi-school architecture</li>
-                <li>Student &amp; teacher management</li>
-                <li>Attendance management</li>
-                <li>Role-based authentication</li>
-                <li>Super admin &amp; school dashboards</li>
-              </ul>
+                  <div class="h-full rounded-[32px] bg-slate-950 border border-white/10 p-6">
 
-              <div class="project-card__stack">
-                <span class="tech-badge tech-badge--laravel">Laravel</span>
-                <span class="tech-badge tech-badge--mysql">MySQL</span>
-                <span class="tech-badge tech-badge--tailwind">TailwindCSS</span>
-                <span class="tech-badge tech-badge--alpine">Alpine.js</span>
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+
+                      <div class="rounded-2xl bg-slate-900 border border-white/5 p-5">
+                        <div class="text-xs text-slate-400">Students</div>
+                        <div class="text-3xl font-bold mt-2">12K</div>
+                      </div>
+
+                      <div class="rounded-2xl bg-slate-900 border border-white/5 p-5">
+                        <div class="text-xs text-slate-400">Teachers</div>
+                        <div class="text-3xl font-bold mt-2">680</div>
+                      </div>
+
+                      <div class="rounded-2xl bg-slate-900 border border-white/5 p-5">
+                        <div class="text-xs text-slate-400">Schools</div>
+                        <div class="text-3xl font-bold mt-2 text-cyan">24</div>
+                      </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-5 h-[360px]">
+
+                      <div class="rounded-3xl bg-slate-900 border border-white/5 p-5">
+
+                        <div class="text-sm text-slate-400 mb-6">
+                          Attendance
+                        </div>
+
+                        <div class="space-y-4">
+
+                          <div class="h-4 rounded-full bg-slate-700 overflow-hidden">
+                            <div class="h-full w-[90%] bg-gradient-to-r from-primary to-cyan"></div>
+                          </div>
+
+                          <div class="h-4 rounded-full bg-slate-700 overflow-hidden">
+                            <div class="h-full w-[70%] bg-gradient-to-r from-primary to-cyan"></div>
+                          </div>
+
+                          <div class="h-4 rounded-full bg-slate-700 overflow-hidden">
+                            <div class="h-full w-[85%] bg-gradient-to-r from-primary to-cyan"></div>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <div class="rounded-3xl bg-slate-900 border border-white/5 p-5 flex items-end gap-3">
+
+                        <div class="flex-1 h-20 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                        <div class="flex-1 h-32 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+                        <div class="flex-1 h-44 rounded-t-2xl bg-gradient-to-t from-cyan to-soft"></div>
+                        <div class="flex-1 h-24 rounded-t-2xl bg-gradient-to-t from-primary to-cyan"></div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
 
-              <div class="project-card__actions">
-                <a href="https://github.com/sulistiyas/EduVora" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">
-                  <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                  GitHub
-                </a>
-                <a href="#" class="btn btn--primary btn--sm">
-                  Live Demo
-                  <span class="btn-arrow">→</span>
-                </a>
-              </div>
             </div>
-          </article>
+
+          </div>
 
         </div>
+
       </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════════
-         SKILLS SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="skills section" id="skills">
-      <div class="container">
+    </div>
 
-        <div class="section-header reveal-up">
-          <span class="section-tag">Expertise</span>
-          <h2 class="section-title">Tech <span class="gradient-text">Stack</span></h2>
-          <p class="section-desc">The tools and technologies I use to bring ideas to life.</p>
-        </div>
+  </section>
 
-        <div class="skills__grid">
+  <!-- ABOUT -->
+  <section id="about" class="py-32">
 
-          <div class="skill-card reveal-up" style="--delay: 0s">
-            <div class="skill-card__icon">⚡</div>
-            <h4 class="skill-card__name">Laravel</h4>
-            <p class="skill-card__desc">Elegant PHP framework for rapid, robust web apps</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="92"></div></div>
-          </div>
+    <div class="max-w-7xl mx-auto px-6">
 
-          <div class="skill-card reveal-up" style="--delay: 0.05s">
-            <div class="skill-card__icon">🐘</div>
-            <h4 class="skill-card__name">PHP</h4>
-            <p class="skill-card__desc">Server-side scripting for dynamic web systems</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="88"></div></div>
-          </div>
+      <div class="mb-20 reveal">
+        <h2 class="text-5xl lg:text-6xl font-black mb-6">
+          About &
+          <span class="gradient-text">Engineering</span>
+        </h2>
 
-          <div class="skill-card reveal-up" style="--delay: 0.1s">
-            <div class="skill-card__icon">🗄️</div>
-            <h4 class="skill-card__name">MySQL</h4>
-            <p class="skill-card__desc">Relational database design, queries, optimization</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="85"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.15s">
-            <div class="skill-card__icon">💛</div>
-            <h4 class="skill-card__name">JavaScript</h4>
-            <p class="skill-card__desc">Modern ES6+, async patterns, DOM manipulation</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="80"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.2s">
-            <div class="skill-card__icon">🎨</div>
-            <h4 class="skill-card__name">TailwindCSS</h4>
-            <p class="skill-card__desc">Utility-first CSS for rapid, consistent UIs</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="90"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.25s">
-            <div class="skill-card__icon">🏔️</div>
-            <h4 class="skill-card__name">Alpine.js</h4>
-            <p class="skill-card__desc">Lightweight reactivity for Blade-driven apps</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="82"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.3s">
-            <div class="skill-card__icon">🌊</div>
-            <h4 class="skill-card__name">Livewire</h4>
-            <p class="skill-card__desc">Full-stack components inside Laravel</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="75"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.35s">
-            <div class="skill-card__icon">🔗</div>
-            <h4 class="skill-card__name">REST API</h4>
-            <p class="skill-card__desc">Designing and consuming scalable RESTful services</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="87"></div></div>
-          </div>
-
-          <div class="skill-card reveal-up" style="--delay: 0.4s">
-            <div class="skill-card__icon">🐙</div>
-            <h4 class="skill-card__name">Git &amp; GitHub</h4>
-            <p class="skill-card__desc">Version control, branching, collaboration workflows</p>
-            <div class="skill-card__bar"><div class="skill-card__fill" data-width="85"></div></div>
-          </div>
-
-        </div>
+        <p class="text-slate-400 text-lg max-w-3xl">
+          Focused on building scalable SaaS platforms,
+          elegant dashboards, maintainable architecture,
+          and premium user experiences.
+        </p>
       </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════════
-         STATS SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="stats section" id="stats">
-      <div class="container">
-        <div class="stats__grid">
-          <div class="stat-card reveal-up" style="--delay: 0s">
-            <div class="stat-card__num" data-count="10" data-suffix="+">0</div>
-            <div class="stat-card__label">Projects Completed</div>
-            <div class="stat-card__sub">Web systems shipped to production</div>
-          </div>
-          <div class="stat-card reveal-up" style="--delay: 0.1s">
-            <div class="stat-card__num" data-count="5" data-suffix="+">0</div>
-            <div class="stat-card__label">Systems Built</div>
-            <div class="stat-card__sub">End-to-end SaaS &amp; enterprise apps</div>
-          </div>
-          <div class="stat-card reveal-up" style="--delay: 0.2s">
-            <div class="stat-card__num" data-count="9" data-suffix="+">0</div>
-            <div class="stat-card__label">Technologies Used</div>
-            <div class="stat-card__sub">Across backend, frontend &amp; DevOps</div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <!-- Bento -->
+      <div class="grid lg:grid-cols-4 gap-6">
 
-    <!-- ═══════════════════════════════════════════════
-         CONTACT SECTION
-    ═══════════════════════════════════════════════ -->
-    <section class="contact section" id="contact">
-      <div class="container">
+        <div class="lg:col-span-2 glass border-glow rounded-[32px] p-10 reveal">
+          <div class="text-5xl mb-8">⚡</div>
 
-        <div class="section-header reveal-up">
-          <span class="section-tag">Let's Connect</span>
-          <h2 class="section-title">Ready to Build <span class="gradient-text">Something?</span></h2>
-          <p class="section-desc">
-            Have a project in mind? Let's talk — I'm open to freelance, collaboration, or full-time opportunities.
+          <h3 class="text-3xl font-bold mb-6">
+            Developer Philosophy
+          </h3>
+
+          <p class="text-slate-400 leading-relaxed text-lg">
+            I focus on creating scalable and maintainable systems
+            with clean architecture, reusable services,
+            efficient database structures, and elegant user experiences.
           </p>
         </div>
 
-        <div class="contact__card glass-card reveal-up">
-          <div class="contact__inner">
-            <div class="contact__left">
-              <h3>Get In Touch</h3>
-              <p>I'm currently available for new opportunities. Whether it's a full project or a quick question, feel free to reach out.</p>
-              <div class="contact__email">
-                <span class="contact__email-label">Email me at</span>
-                <a href="mailto:sulistiyas@gmail.com" class="contact__email-addr">sulistiyas@gmail.com</a>
-              </div>
-            </div>
+        <div class="glass border-glow rounded-[32px] p-8 reveal">
+          <div class="text-4xl mb-6">🛠️</div>
 
-            <div class="contact__links">
-              <a href="mailto:sulistiyas@gmail.com" class="contact-link contact-link--email">
-                <div class="contact-link__icon">✉</div>
-                <div class="contact-link__info">
-                  <strong>Email</strong>
-                  <span>sulistiyas@gmail.com</span>
-                </div>
-                <span class="contact-link__arrow">→</span>
-              </a>
+          <h3 class="text-2xl font-bold mb-4">
+            Tech Stack
+          </h3>
 
-              <a href="https://github.com/sulistiyas" target="_blank" rel="noopener" class="contact-link contact-link--github">
-                <div class="contact-link__icon">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                </div>
-                <div class="contact-link__info">
-                  <strong>GitHub</strong>
-                  <span>@sulistiyas</span>
-                </div>
-                <span class="contact-link__arrow">→</span>
-              </a>
+          <div class="space-y-3 text-slate-400">
+            <div>Laravel</div>
+            <div>PHP</div>
+            <div>MySQL</div>
+            <div>TailwindCSS</div>
+            <div>Alpine.js</div>
+          </div>
+        </div>
 
-              <a href="https://instagram.com/sulistiyas" target="_blank" rel="noopener" class="contact-link contact-link--instagram">
-                <div class="contact-link__icon">📸</div>
-                <div class="contact-link__info">
-                  <strong>Instagram</strong>
-                  <span>@sulistiyas</span>
-                </div>
-                <span class="contact-link__arrow">→</span>
-              </a>
+        <div class="glass border-glow rounded-[32px] p-8 reveal">
+          <div class="text-4xl mb-6">🚀</div>
 
-              <a href="https://threads.net/@sulistiyas" target="_blank" rel="noopener" class="contact-link contact-link--threads">
-                <div class="contact-link__icon">@</div>
-                <div class="contact-link__info">
-                  <strong>Threads</strong>
-                  <span>@sulistiyas</span>
-                </div>
-                <span class="contact-link__arrow">→</span>
-              </a>
-            </div>
+          <h3 class="text-2xl font-bold mb-4">
+            SaaS Architecture
+          </h3>
+
+          <p class="text-slate-400">
+            Multi-tenant systems, scalable admin dashboards,
+            and modular backend architecture.
+          </p>
+        </div>
+
+        <div class="glass border-glow rounded-[32px] p-8 reveal">
+          <div class="text-4xl mb-6">🔌</div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            REST API Development
+          </h3>
+
+          <p class="text-slate-400">
+            Secure API authentication, structured endpoints,
+            scalable integrations, and documentation.
+          </p>
+        </div>
+
+        <div class="lg:col-span-2 glass border-glow rounded-[32px] p-8 reveal">
+          <div class="text-4xl mb-6">🧠</div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            Backend Engineering
+          </h3>
+
+          <p class="text-slate-400 leading-relaxed">
+            Building reliable backend services with repository patterns,
+            service layers, optimized database queries,
+            and scalable Laravel architecture.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="py-32 relative">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="mb-20 reveal">
+        <h2 class="text-5xl lg:text-6xl font-black mb-6">
+          Core
+          <span class="gradient-text">Skills</span>
+        </h2>
+
+        <p class="text-slate-400 text-lg">
+          Modern fullstack technologies focused on SaaS engineering.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Skill Card -->
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">🔥</div>
+          <div class="text-2xl font-bold mb-3">Laravel</div>
+          <div class="text-slate-400">
+            Scalable backend architecture and modern SaaS systems.
+          </div>
+        </div>
+
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">⚙️</div>
+          <div class="text-2xl font-bold mb-3">PHP</div>
+          <div class="text-slate-400">
+            Clean OOP development and backend engineering.
+          </div>
+        </div>
+
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">🗄️</div>
+          <div class="text-2xl font-bold mb-3">MySQL</div>
+          <div class="text-slate-400">
+            Relational database optimization and schema design.
+          </div>
+        </div>
+
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">🎨</div>
+          <div class="text-2xl font-bold mb-3">TailwindCSS</div>
+          <div class="text-slate-400">
+            Premium UI systems and responsive interfaces.
+          </div>
+        </div>
+
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">⚡</div>
+          <div class="text-2xl font-bold mb-3">Alpine.js</div>
+          <div class="text-slate-400">
+            Lightweight interactivity and dashboard UX.
+          </div>
+        </div>
+
+        <div class="glass border-glow rounded-[28px] p-8 hover:-translate-y-2 transition duration-500 reveal">
+          <div class="text-4xl mb-6">🔗</div>
+          <div class="text-2xl font-bold mb-3">REST API</div>
+          <div class="text-slate-400">
+            Secure integrations and scalable API systems.
           </div>
         </div>
 
       </div>
-    </section>
 
-  </main>
-
-  <!-- ═══════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <a href="#hero" class="navbar__logo">
-          <span class="logo-bracket">&lt;</span>Sulis<span class="logo-bracket">/&gt;</span>
-        </a>
-        <p>Laravel Developer &amp; Web Application Engineer</p>
-      </div>
-
-      <div class="footer__links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-
-      <p class="footer__copy">
-        &copy; <span id="year"></span> Sulis. Crafted with care.
-      </p>
     </div>
+
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-32 relative">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="glass-strong border-glow rounded-[40px] overflow-hidden">
+
+        <div class="grid lg:grid-cols-2">
+
+          <!-- Left -->
+          <div class="p-10 lg:p-16 relative overflow-hidden">
+
+            <div class="absolute top-0 right-0 w-72 h-72 bg-primary/20 blur-3xl rounded-full"></div>
+
+            <div class="relative z-10">
+
+              <div class="inline-flex px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-8">
+                Let's Collaborate
+              </div>
+
+              <h2 class="text-5xl font-black leading-tight mb-8">
+                Building modern
+                <span class="gradient-text">
+                  SaaS experiences
+                </span>
+              </h2>
+
+              <p class="text-slate-400 text-lg leading-relaxed mb-12">
+                Open for freelance work, remote collaboration,
+                SaaS development, dashboard systems,
+                and Laravel backend engineering projects.
+              </p>
+
+              <div class="space-y-5">
+
+                <a href="https://github.com/sulistiyas"
+                   target="_blank"
+                   class="flex items-center gap-4 glass border-glow rounded-2xl p-5 hover:bg-white/5 transition">
+
+                  <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-cyan flex items-center justify-center">
+                    G
+                  </div>
+
+                  <div>
+                    <div class="font-semibold">GitHub</div>
+                    <div class="text-slate-400 text-sm">
+                      github.com/sulistiyas
+                    </div>
+                  </div>
+
+                </a>
+
+                <a href="#"
+                   class="flex items-center gap-4 glass border-glow rounded-2xl p-5 hover:bg-white/5 transition">
+
+                  <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-cyan flex items-center justify-center">
+                    I
+                  </div>
+
+                  <div>
+                    <div class="font-semibold">Instagram</div>
+                    <div class="text-slate-400 text-sm">
+                      @yourusername
+                    </div>
+                  </div>
+
+                </a>
+
+                <a href="#"
+                   class="flex items-center gap-4 glass border-glow rounded-2xl p-5 hover:bg-white/5 transition">
+
+                  <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-cyan flex items-center justify-center">
+                    T
+                  </div>
+
+                  <div>
+                    <div class="font-semibold">Threads</div>
+                    <div class="text-slate-400 text-sm">
+                      @yourusername
+                    </div>
+                  </div>
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Right -->
+          <div class="p-10 lg:p-16 bg-slate-950/40">
+
+            <form class="space-y-6">
+
+              <div>
+                <label class="block mb-3 text-sm text-slate-300">
+                  Full Name
+                </label>
+
+                <input type="text"
+                       class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition"
+                       placeholder="Your Name">
+              </div>
+
+              <div>
+                <label class="block mb-3 text-sm text-slate-300">
+                  Email Address
+                </label>
+
+                <input type="email"
+                       class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition"
+                       placeholder="you@example.com">
+              </div>
+
+              <div>
+                <label class="block mb-3 text-sm text-slate-300">
+                  Project Details
+                </label>
+
+                <textarea rows="6"
+                          class="w-full p-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition resize-none"
+                          placeholder="Tell me about your project..."></textarea>
+              </div>
+
+              <button class="w-full h-14 rounded-2xl bg-gradient-to-r from-primary to-cyan font-semibold shadow-glow hover:scale-[1.02] transition-all duration-300">
+                Send Message
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="relative border-t border-white/5">
+
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+
+        <div>
+          <div class="text-2xl font-black">
+            Sulistiya<span class="text-soft">.</span>
+          </div>
+
+          <div class="text-slate-500 mt-2">
+            Laravel Developer & SaaS Engineer
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-slate-400">
+
+          <a href="https://github.com/sulistiyas"
+             target="_blank"
+             class="hover:text-white transition">
+            GitHub
+          </a>
+
+          <a href="#"
+             class="hover:text-white transition">
+            Instagram
+          </a>
+
+          <a href="#"
+             class="hover:text-white transition">
+            Threads
+          </a>
+
+          <a href="mailto:you@example.com"
+             class="hover:text-white transition">
+            Email
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </footer>
 
-  <!-- JavaScript -->
-  <script src="assets/js/script.js"></script>
+  <!-- Scripts -->
+  <script>
+
+    // Scroll Progress
+    const progress = document.getElementById('progress');
+
+    window.addEventListener('scroll', () => {
+      const total =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+      const progressWidth =
+        (window.pageYOffset / total) * 100;
+
+      progress.style.width = progressWidth + '%';
+    });
+
+    // Reveal Animation
+    const reveals = document.querySelectorAll('.reveal');
+
+    const revealOnScroll = () => {
+      reveals.forEach((el) => {
+        const top = el.getBoundingClientRect().top;
+
+        if (top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // Cursor Glow
+    const glow = document.querySelector('.cursor-glow');
+
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+  </script>
+
 </body>
 </html>
