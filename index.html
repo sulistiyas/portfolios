@@ -1044,7 +1044,7 @@
                   <div>
                     <div class="font-semibold">Instagram</div>
                     <div class="text-slate-400 text-sm">
-                      @yourusername
+                      http://instagram.com/sulistiya_nugroho
                     </div>
                   </div>
 
@@ -1060,7 +1060,7 @@
                   <div>
                     <div class="font-semibold">Threads</div>
                     <div class="text-slate-400 text-sm">
-                      @yourusername
+                      https://www.threads.com/@sulistiya_nugroho
                     </div>
                   </div>
 
@@ -1075,43 +1075,65 @@
           <!-- Right -->
           <div class="p-10 lg:p-16 bg-slate-950/40">
 
-            <form class="space-y-6">
+            <form
+                action="https://formsubmit.co/emailkamu@gmail.com"
+                method="POST"
+                class="space-y-6">
 
-              <div>
-                <label class="block mb-3 text-sm text-slate-300">
-                  Full Name
-                </label>
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="New Portfolio Message!">
+                <input type="hidden" name="_template" value="table">
 
-                <input type="text"
-                       class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition"
-                       placeholder="Your Name">
-              </div>
+                <div>
+                    <label class="block mb-3 text-sm text-slate-300">
+                    Full Name
+                    </label>
 
-              <div>
-                <label class="block mb-3 text-sm text-slate-300">
-                  Email Address
-                </label>
+                    <input
+                    type="text"
+                    name="name"
+                    required
+                    class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none"
+                    placeholder="Your Name"
+                    >
+                </div>
 
-                <input type="email"
-                       class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition"
-                       placeholder="you@example.com">
-              </div>
+                <div>
+                    <label class="block mb-3 text-sm text-slate-300">
+                    Email Address
+                    </label>
 
-              <div>
-                <label class="block mb-3 text-sm text-slate-300">
-                  Project Details
-                </label>
+                    <input
+                    type="email"
+                    name="email"
+                    required
+                    class="w-full h-14 px-5 rounded-2xl glass border-glow bg-transparent outline-none"
+                    placeholder="you@example.com"
+                    >
+                </div>
 
-                <textarea rows="6"
-                          class="w-full p-5 rounded-2xl glass border-glow bg-transparent outline-none focus:border-primary transition resize-none"
-                          placeholder="Tell me about your project..."></textarea>
-              </div>
+                <div>
+                    <label class="block mb-3 text-sm text-slate-300">
+                    Project Details
+                    </label>
 
-              <button class="w-full h-14 rounded-2xl bg-gradient-to-r from-primary to-cyan font-semibold shadow-glow hover:scale-[1.02] transition-all duration-300">
-                Send Message
-              </button>
+                    <textarea
+                    rows="6"
+                    name="message"
+                    required
+                    class="w-full p-5 rounded-2xl glass border-glow bg-transparent outline-none resize-none"
+                    placeholder="Tell me about your project..."
+                    ></textarea>
+                </div>
 
-            </form>
+                <button
+                    type="submit"
+                    class="w-full h-14 rounded-2xl bg-gradient-to-r from-primary to-cyan font-semibold shadow-glow"
+                >
+                    Send Message
+                </button>
+
+                </form>
 
           </div>
 
